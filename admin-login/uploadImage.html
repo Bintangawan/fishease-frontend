@@ -18,7 +18,7 @@
       <div class="sidebar" id="sidebar">
         <ul class="menu">
           <li>
-            <a href="#"><i class="fas fa-home"></i>Home</a>
+            <a href="#" id="logoutBtn"><i class="fas fa-home"></i>Home</a>
           </li>
           <li>
             <a href="profile.html"
@@ -26,7 +26,7 @@
             </a>
           </li>
           <li>
-            <a href="#"><i class="fas fa-sign-out-alt"></i>Logout</a>
+            <a href="javascript:void(0)" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i>Logout</a>
           </li>
         </ul>
       </div>
@@ -61,14 +61,7 @@
         </div>
       </div>
     </div>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-            if (authChecker.authService.isLoggedIn()) {
-                document.getElementById('auth-loading').style.display = 'none';
-                document.querySelector('.page-container').style.display = 'block';
-            }
-        });
-    </script>
+    
     <script src="main.js"></script>
   </body>
 </html>

@@ -1,6 +1,7 @@
 const sidebar = document.querySelector(".sidebar");
 const openNavBtn = document.querySelector("#open_nav-btn");
 const closeNavBtn = document.querySelector("#close_nav-btn");
+const logoutBtn = document.querySelector("#logoutBtn");
 
 // Open sidebar
 const openNav = () => {
@@ -16,5 +17,14 @@ const closeNav = () => {
   closeNavBtn.style.display = "none"; // Sembunyikan tombol close
 };
 
+// Add event listeners
 openNavBtn.addEventListener("click", openNav);
 closeNavBtn.addEventListener("click", closeNav);
+
+function handleLogout() {
+  if (authService && typeof authService.logout === 'function') {
+      authService.logout();
+  } else {
+      console.error('AuthService not found');
+  }
+}

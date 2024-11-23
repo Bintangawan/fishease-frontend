@@ -60,7 +60,7 @@ class AuthService {
     // Handle logout
     logout() {
         this.removeToken();
-        window.location.href = '/';
+        window.location.href = '/admin-login/login.html';
     }
 }
 
@@ -68,18 +68,20 @@ class AuthService {
 const authService = new AuthService();
 
 // Handle form submission
-document.getElementById('loginForm').addEventListener('submit', async (e) => {
+const loginForm = document.getElementById('loginForm');
+if (loginForm) {
+  loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const errorMessage = document.getElementById('errorMessage');
     
     try {
-        await authService.login(email, password);
-        window.location.href = "http://localhost:5500/admin-login/uploadImage.html";
+      await authService.login(email, password);
+      window.location.href = "http://localhost:5500/admin-login/uploadImage.html";
     } catch (error) {
-        errorMessage.textContent = error.message;
-        errorMessage.style.display = 'block';
+      errorMessage.textContent = error.message;
+      errorMessage.style.display = 'block';
     }
-});
+  });
+}
