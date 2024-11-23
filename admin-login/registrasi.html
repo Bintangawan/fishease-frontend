@@ -31,10 +31,12 @@
         </div>
         <div class="input-group">
           <input
-            type="text"
-            id="username"
-            name="username"
-            placeholder="Username"
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="Phone Number"
+            pattern="[0-9]{10,13}"
+            title="Please enter a valid phone number (10-13 digits)"
             required
           />
         </div>
@@ -59,5 +61,6 @@
         <button type="submit" class="login-btn">Register</button>
       </form>
     </div>
+    <script src="js/registrasi.js"></script>
   </body>
 </html>
