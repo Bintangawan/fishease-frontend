@@ -1,0 +1,242 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body */
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #87cefa; /* Sky blue background */
+}
+
+/* Login Container */
+.login-container {
+  background-color: rgba(255, 255, 255, 0.9); /* Light transparent white */
+  border-radius: 10px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  padding: 30px 20px;
+  width: 350px;
+  text-align: center;
+}
+
+/* Form Title */
+.login-form h2 {
+  margin-bottom: 10px;
+  color: #333;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+/* Signup Link */
+.signup-link {
+  display: block;
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: #007bff;
+  text-decoration: none;
+  text-align: left;
+}
+
+.signup-link:hover {
+  text-decoration: underline;
+}
+
+/* Input Group */
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #eaeaea;
+  color: #333;
+  outline: none;
+}
+
+.input-group input::placeholder {
+  color: #888;
+}
+
+/* Forgot Password */
+.forgot-password {
+  display: block;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #007bff;
+  text-decoration: none;
+  text-align: left;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+/* Login Button */
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: #0056b3;
+}
+
+/* //////////////////////////////////////////// 
+  Upload Image Ikannya   
+*/
+
+/* Page Container */
+.page-container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  background-color: rgba(255, 255, 255, 0.9);
+  width: 250px;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: -250px; /* Sidebar tersembunyi di luar layar */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: left 0.3s ease; /* Animasi smooth untuk transisi */
+  z-index: 10;
+}
+
+.sidebar.visible {
+  left: 0; /* Sidebar muncul ketika class "visible" ditambahkan */
+}
+
+.menu {
+  list-style: none;
+  padding: 20px;
+  margin: 0;
+  margin-top: 60px;
+}
+
+.menu li {
+  margin-bottom: 20px;
+}
+
+.menu li a {
+  gap: 20px;
+  text-decoration: none;
+  color: #333;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease; /* Tambahkan efek hover smooth */
+}
+
+.menu li a:hover {
+  color: #007bff; /* Warna berubah saat di-hover */
+}
+
+.menu li a i {
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+/* Main Content */
+.main-content {
+  margin-left: 0;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  transition: margin-left 0.3s ease; /* Smooth transisi */
+}
+
+/* Main Content (Shift saat sidebar terbuka) */
+.sidebar.visible ~ .main-content {
+  margin-left: 250px;
+}
+
+/* Menu Toggle Button */
+.menu-toggle {
+  position: fixed; /* Tetap di posisi saat scrolling */
+  top: 20px;
+  left: 20px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+  z-index: 11; /* Tetap di atas sidebar */
+  transition: color 0.2s ease; /* Smooth hover */
+}
+
+.menu-toggle:hover {
+  color: #007bff; /* Efek hover pada tombol toggle */
+}
+
+#close_nav-btn {
+  display: none; /* Sembunyikan tombol close secara default */
+}
+
+/* Upload Container */
+.upload-container {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  padding: 30px 20px;
+  text-align: center;
+}
+
+.upload-form h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.upload-form .input-group {
+  margin-bottom: 20px;
+}
+
+.upload-form input[type="file"] {
+  padding: 10px;
+  width: 100%;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #eaeaea;
+}
+
+.upload-form input[type="file"]::-webkit-file-upload-button {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.upload-form input[type="file"]::-webkit-file-upload-button:hover {
+  background: #0056b3;
+}
+
+/* ///////////////////////////////// 
+  Profile & History 
+*/

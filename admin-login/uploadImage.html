@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload Fish Image</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/js/all.min.js"
+      defer
+    ></script>
+  </head>
+  <body>
+    <div class="page-container">
+      <!-- Sidebar -->
+      <div class="sidebar" id="sidebar">
+        <ul class="menu">
+          <li>
+            <a href="#"><i class="fas fa-home"></i>Home</a>
+          </li>
+          <li>
+            <a href="profile.html"
+              ><i class="fas fa-user"></i>Profile & History
+            </a>
+          </li>
+          <li>
+            <a href="#"><i class="fas fa-sign-out-alt"></i>Logout</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <button id="open_nav-btn" class="menu-toggle">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <button id="close_nav-btn" class="menu-toggle">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="upload-container">
+          <form
+            action="#"
+            method="post"
+            enctype="multipart/form-data"
+            class="upload-form"
+          >
+            <h2>Upload Fish Image</h2>
+            <div class="input-group">
+              <input
+                type="file"
+                id="fish-image"
+                name="fish-image"
+                accept="image/*"
+                required
+              />
+            </div>
+            <button type="submit" class="login-btn">Upload</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

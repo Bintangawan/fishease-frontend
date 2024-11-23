@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Entry Details</title>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/js/all.min.js"
+      defer
+    ></script>
+    <link rel="stylesheet" href="css/profile.css" />
+  </head>
+  <body>
+    <div class="page-container">
+      <!-- Sidebar -->
+      <div class="sidebar" id="sidebar">
+        <ul class="menu">
+          <li>
+            <a href="uploadImage.html"><i class="fas fa-home"></i>Home</a>
+          </li>
+          <li>
+            <a href="profile.html"
+              ><i class="fas fa-user"></i>Profile & History
+            </a>
+          </li>
+          <li>
+            <a href="#"><i class="fas fa-sign-out-alt"></i>Logout</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <button id="open_nav-btn" class="menu-toggle">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <button id="close_nav-btn" class="menu-toggle">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <!-- Entry Details -->
+        <div class="entry-details">
+          <div class="entry-header">
+            <div class="entry-info-box">
+              <p><strong>Entry ID:</strong> #926</p>
+              <p><strong>Identified Disease:</strong> White Spot Disease</p>
+              <p><strong>Date:</strong> 14/11/2024</p>
+            </div>
+            <div class="confidence-box">
+              <div>
+                <p><strong>Confidence Percentage</strong></p>
+                <h1>65%</h1>
+              </div>
+            </div>
+          </div>
+
+          <div class="image-section">
+            <h2>Attached Image:</h2>
+            <img src="images/gambar2.jpg" alt="Disease Image" />
+          </div>
+
+          <div class="description-section">
+            <h3>Description</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+              pharetra fringilla elit in ullamcorper. In a efficitur metus, in
+              condimentum ligula. Nam venenatis quis erat sit amet aliquet.
+              Maecenas rhoncus neque dui, non imperdiet massa cursus sit amet.
+              Fusce cursus ultricies sem sed pharetra. Praesent in pellentesque
+              mi, placerat finibus accumsan sed.
+            </p>
+          </div>
+
+          <div class="affected-species">
+            <h3>Commonly Affected Species</h3>
+            <ul>
+              <li>Lorem ipsum</li>
+              <li>dolor sit amet</li>
+              <li>consectetur</li>
+              <li>adipiscing elit</li>
+              <li>Integer pharetra</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

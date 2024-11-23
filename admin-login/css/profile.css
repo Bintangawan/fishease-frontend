@@ -1,0 +1,279 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body */
+body {
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  background-color: #87cefa; /* Sky blue background */
+}
+
+/* Page Container */
+.page-container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  background-color: rgba(255, 255, 255, 0.9);
+  width: 250px;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: -250px; /* Sidebar tersembunyi di luar layar */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: left 0.3s ease; /* Animasi smooth untuk transisi */
+  z-index: 10;
+}
+
+.sidebar.visible {
+  left: 0; /* Sidebar muncul ketika class "visible" ditambahkan */
+}
+
+.menu {
+  list-style: none;
+  padding: 20px;
+  margin: 0;
+  margin-top: 60px;
+}
+
+.menu li {
+  margin-bottom: 20px;
+}
+
+.menu li a {
+  gap: 20px;
+  text-decoration: none;
+  color: #333;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease; /* Tambahkan efek hover smooth */
+}
+
+.menu li a:hover {
+  color: #007bff; /* Warna berubah saat di-hover */
+}
+
+.menu li a i {
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+/* Main Content */
+.main-content {
+  margin-top: 60px;
+  margin-left: 0;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
+  transition: margin-left 0.3s ease; /* Smooth transisi */
+}
+
+/* Main Content (Shift saat sidebar terbuka) */
+.sidebar.visible ~ .main-content {
+  margin-left: 250px;
+}
+
+/* Menu Toggle Button */
+.menu-toggle {
+  position: fixed; /* Tetap di posisi saat scrolling */
+  top: 20px;
+  left: 20px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+  z-index: 11; /* Tetap di atas sidebar */
+  transition: color 0.2s ease; /* Smooth hover */
+}
+
+.menu-toggle:hover {
+  color: #007bff; /* Efek hover pada tombol toggle */
+}
+
+#close_nav-btn {
+  display: none; /* Sembunyikan tombol close secara default */
+}
+
+/* Tampilkan tombol close jika sidebar terbuka */
+.sidebar.visible ~ #close_nav-btn {
+  display: block;
+}
+
+.sidebar.visible ~ #open_nav-btn {
+  display: none; /* Sembunyikan tombol open jika sidebar terbuka */
+}
+
+/* Profile Header */
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+  width: 80%;
+}
+
+.user-info,
+.entry-stat {
+  background-color: #e6f2ff;
+  padding: 20px;
+  border-radius: 10px;
+  flex: 1;
+}
+
+.user-info p {
+  margin: 5px 0;
+}
+
+.entry-stat {
+  text-align: center;
+}
+
+.entry-stat h2 {
+  text-align: left;
+}
+
+.entry-stat h1 {
+  text-align: right;
+  font-size: 48px;
+  margin: 0;
+}
+
+/* Entry History */
+
+.title {
+  margin-top: 20px;
+  width: 80%;
+}
+
+.entry-item {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #e6f2ff;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  width: 80%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.entry-info p {
+  margin: 5px 0;
+}
+
+.entry-actions a {
+  font-size: 2rem !important;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.entry-actions i:hover {
+  color: red;
+}
+
+/* //////////////////////////// 
+  View Profile Specific Styles 
+*/
+.entry-details {
+  width: 80%;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.entry-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.entry-info-box {
+  background-color: #e6f2ff;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.entry-info-box p {
+  margin: 5px 0;
+  font-size: 18px;
+}
+
+.confidence-box {
+  background-color: #e6f2ff;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.confidence-box h1 {
+  font-size: 48px;
+  text-align: right;
+}
+
+.image-section {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.image-section img {
+  max-width: 100%;
+  height: auto;
+}
+
+.image-section h2 {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.description-section {
+  background-color: #e6f2ff;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.description-section h3 {
+  margin-bottom: 10px;
+}
+
+.description-section p {
+  text-align: justify;
+  line-height: 1.5;
+}
+
+.affected-species {
+  background-color: #e6f2ff;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.affected-species h3 {
+  margin-bottom: 10px;
+}
+
+.affected-species ul {
+  list-style-position: inside;
+  margin-top: 10px;
+}
+
+.affected-species li {
+  margin: 5px 0;
+}

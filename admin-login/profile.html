@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Profile</title>
+    <link rel="stylesheet" href="css/profile.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/js/all.min.js"
+      defer
+    ></script>
+  </head>
+  <body>
+    <div class="page-container">
+      <!-- Sidebar -->
+      <div class="sidebar" id="sidebar">
+        <ul class="menu">
+          <li>
+            <a href="uploadImage.html"><i class="fas fa-home"></i>Home</a>
+          </li>
+          <li>
+            <a href="#"><i class="fas fa-user"></i>Profile & History</a>
+          </li>
+          <li>
+            <a href="#"><i class="fas fa-sign-out-alt"></i>Logout</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <button id="open_nav-btn" class="menu-toggle">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <button id="close_nav-btn" class="menu-toggle">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <!-- Profile Header -->
+        <div class="profile-header">
+          <div class="user-info">
+            <p><strong>Name:</strong> Ujang</p>
+            <p><strong>Email:</strong> ujang_mhndr@mail.xyz</p>
+            <p><strong>Account Created:</strong> 14/11/2024</p>
+          </div>
+          <div class="entry-stat">
+            <h2>Entry Submitted:</h2>
+            <h1>21</h1>
+          </div>
+        </div>
+
+        <!-- Entry History -->
+        <div class="title">
+          <h2>Entry History:</h2>
+        </div>
+        <div class="entry-item">
+          <div class="entry-info">
+            <p><strong>Entry ID:</strong> #926</p>
+            <p><strong>Disease:</strong> White Spot Disease</p>
+            <p><strong>Confidence:</strong> 65%</p>
+            <p><strong>Date:</strong> 14/11/2024</p>
+          </div>
+          <div class="entry-actions">
+            <a href="#"><i class="fa-solid fa-trash"></i></a>
+            <a href="viewDetails.html"
+              ><i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="entry-item">
+          <div class="entry-info">
+            <p><strong>Entry ID:</strong> #927</p>
+            <p><strong>Disease:</strong> Fin Rot</p>
+            <p><strong>Confidence:</strong> 78%</p>
+            <p><strong>Date:</strong> 15/11/2024</p>
+          </div>
+          <div class="entry-actions">
+            <a href="#"><i class="fa-solid fa-trash"></i></a>
+            <a href="viewDetails.html"
+              ><i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>
