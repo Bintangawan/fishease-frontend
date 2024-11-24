@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const fullname = document.getElementById('fullname').value;
         const email = document.getElementById('email').value;
         const phone = document.getElementById('phone').value;
-        const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
         const confirmPassword = document.getElementById('confirm-password').value;
         
