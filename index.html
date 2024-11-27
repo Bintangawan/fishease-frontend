@@ -1,0 +1,310 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Fishease Application</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/landing.css" />
+  </head>
+  <body class="bg-blue-50">
+    <header class="sticky top-5 z-10 mt-5 container mx-auto px-0">
+      <div class="bg-white shadow-md mx-4 rounded-3xl">
+        <div
+          class="container mx-auto flex justify-between items-center py-4 px-6"
+        >
+          <a href="/" class="text-2xl font-bold text-gray-800 text-indigo-600">
+            .Fishease
+          </a>
+          <nav class="hidden md:flex space-x-6">
+            <a
+              class="text-blue-600 transition-colors duration-300 hover:text-blue-800 nav-link"
+              href="#home"
+              data-scroll="#home"
+            >
+              Home
+            </a>
+            <a
+              class="text-gray-600 transition-colors duration-300 hover:text-blue-600 nav-link"
+              href="#about-us"
+              data-scroll="#about-us"
+            >
+              About
+            </a>
+            <a
+              class="text-gray-600 transition-colors duration-300 hover:text-blue-600 nav-link"
+              href="#contact"
+              data-scroll="#contact"
+            >
+              Contact
+            </a>
+          </nav>
+          <a
+            class="hidden md:block bg-blue-600 text-white px-4 py-2 rounded-full transition-transform duration-300 hover:scale-105"
+            href="admin-login/login.html"
+          >
+            Sign In
+          </a>
+          <button
+            class="md:hidden text-gray-600 focus:outline-none"
+            id="menu-button"
+          >
+            <i class="fas fa-bars text-2xl"> </i>
+          </button>
+          <button
+            class="md:hidden text-gray-600 focus:outline-none"
+            id="close-button"
+            style="display: none"
+          >
+            <i class="fas fa-times text-2xl"> </i>
+          </button>
+        </div>
+        <div class="md:hidden" id="mobile-menu" style="display: none">
+          <nav class="flex flex-col space-y-4 px-6 py-4">
+            <a
+              class="text-blue-600 transition-colors duration-300 hover:text-blue-800 nav-link"
+              href="#home"
+              data-scroll="#home"
+            >
+              Home
+            </a>
+            <a
+              class="text-gray-600 transition-colors duration-300 hover:text-blue-600 nav-link"
+              href="#about-us"
+              data-scroll="#about-us"
+            >
+              About
+            </a>
+            <a
+              class="text-gray-600 transition-colors duration-300 hover:text-blue-600 nav-link"
+              href="#contact"
+              data-scroll="#contact"
+            >
+              Contact
+            </a>
+            <a
+              class="bg-blue-600 text-white px-4 py-2 rounded-full transition-transform duration-300 hover:scale-105"
+              href="admin-login/login.html"
+            >
+              Sign In
+            </a>
+          </nav>
+        </div>
+      </div>
+    </header>
+    <section
+      class="container mx-auto flex flex-col md:flex-row items-center py-8 px-6 mt-24 fade-in"
+      id="home"
+    >
+      <div class="md:w-1/2">
+        <div
+          class="bg-blue-100 text-blue-600 px-4 py-2 rounded-full inline-block mb-4"
+        >
+          <i class="fas fa-check-circle"> </i>
+          Great App for Fish Farmer!
+        </div>
+        <h1 class="text-5xl font-bold text-gray-800 leading-tight mb-4">
+          Hello,
+          <br />
+          Selamat Datang!
+          <br />
+          <span class="text-blue-600"> di Fishease Application </span>
+        </h1>
+        <p class="text-gray-600 mb-6">
+          Ingin mengetahui lebih lanjut mengenai service yang kami tawarkan?
+          <br />
+          Ayo scroll ke bawah untuk mengetahui lebih banyak!
+        </p>
+        <div class="flex space-x-4">
+          <a
+            class="bg-blue-600 text-white px-6 py-3 rounded-full transition-transform duration-300 hover:scale-105"
+            href="#about-us"
+            data-scroll="#about-us"
+          >
+            Get Started
+          </a>
+        </div>
+      </div>
+      <div class="md:w-1/2 mt-8 md:mt-0 relative md:ml-10 mx-auto">
+        <img
+          alt="Illustration of people working on a project"
+          class="rounded-lg shadow-lg w-full"
+          height="400"
+          src="admin-login/images/gambar2.jpg"
+          width="600"
+        />
+      </div>
+    </section>
+
+    <section
+      class="container mx-auto flex flex-col md:flex-row items-center py-8 px-6 mt-10 fade-in"
+      id="about-us"
+    >
+      <div class="md:w-1/2">
+        <h2 class="text-blue-600 font-bold text-lg fade-in mt-10">
+          MORE ABOUT US
+        </h2>
+        <h1 class="text-gray-800 font-bold text-3xl mt-2 fade-in">
+          Fishease: Platform Cerdas untuk Petani Ikan!
+        </h1>
+        <p class="text-gray-600 mt-4 fade-in">
+          Fishease adalah solusi modern bagi petani ikan yang ingin
+          mengoptimalkan kesehatan dan produktivitas ikan mereka. Kami
+          menyediakan berbagai fitur canggih yang membantu Anda mengelola
+          kesehatan ikan dengan mudah.
+        </p>
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <ul class="space-y-4">
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-blue-600 mr-2"> </i>
+              <span class="text-gray-800 fade-in">
+                Deteksi penyakit ikan hanya dengan mengunggah gambar, memudahkan
+                Anda dalam mengenali masalah dengan cepat.
+              </span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-blue-600 mr-2"> </i>
+              <span class="text-gray-800 fade-in">
+                Lihat analisis lengkap tentang penyakit ikan, lengkap dengan
+                rekomendasi penanganan yang sesuai.
+              </span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-blue-600 mr-2"> </i>
+              <span class="text-gray-800 fade-in">
+                Akses riwayat deteksi penyakit ikan sebelumnya, memberikan
+                wawasan lebih dalam tentang kesehatan ikan Anda.
+              </span>
+            </li>
+          </ul>
+          <ul class="space-y-4">
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-blue-600 mr-2"> </i>
+              <span class="text-gray-800 fade-in">
+                Dapatkan informasi mendalam mengenai jenis penyakit yang sedang
+                dialami ikan Anda, lengkap dengan solusinya.
+              </span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-blue-600 mr-2"> </i>
+              <span class="text-gray-800 fade-in">
+                Pantau kondisi ikan Anda secara real-time dengan hasil deteksi
+                yang selalu up-to-date.
+              </span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-blue-600 mr-2 md:mt-6 mx-auto">
+              </i>
+              <span class="text-gray-800 fade-in md:mt-6 mx-auto">
+                Nikmati layanan dukungan penuh dari tim Fishease yang siap
+                membantu Anda dengan kendala kesehatan ikan.
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="md:w-1/2 mt-10 md:mt-0 relative md:ml-10 mx-auto">
+        <img
+          alt="Woman in yellow shirt working on a laptop in an office"
+          class="rounded-lg shadow-lg w-full"
+          height="400"
+          src="admin-login/images/gambar2.jpg"
+          width="600"
+        />
+      </div>
+    </section>
+
+    <footer class="bg-white py-8 fade-in">
+      <div class="container mx-auto px-6">
+        <div class="flex flex-wrap justify-between">
+          <div class="w-full md:w-1/4 mb-6 md:mb-0">
+            <h2 class="text-2xl font-bold text-gray-800 text-indigo-600 mb-4">
+              .Fishease
+            </h2>
+            <p class="text-gray-600">
+              We Are Online<br />Find Us On Social Media
+            </p>
+            <div class="flex mt-10 space-x-4">
+              <a
+                href="https://github.com/p1xlb/Fishease"
+                target="_blank"
+                class="icon"
+                ><i class="fab fa-github"></i
+              ></a>
+              <a
+                href="https://github.com/p1xlb/Fishease"
+                target="_blank"
+                class="icon"
+                ><i class="fab fa-instagram"></i
+              ></a>
+            </div>
+          </div>
+          <div class="w-full md:w-1/5 mb-6 md:mb-0">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">Useful Links</h2>
+            <ul class="text-gray-600">
+              <li class="mb-2">
+                <a href="#home" class="nav-link" data-scroll="#home">Home</a>
+              </li>
+              <li class="mb-2">
+                <a href="#about-us" class="nav-link" data-scroll="#about-us"
+                  >About us</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="w-full md:w-1/5 mb-6 md:mb-0">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">Our Services</h2>
+            <ul class="text-gray-600">
+              <li class="mb-2">
+                <a href="#" class="nav-link">Deteksi Penyakit Ikan</a>
+              </li>
+              <li class="mb-2">
+                <a href="#" class="nav-link">Hasil Deteksi</a>
+              </li>
+              <li class="mb-2">
+                <a href="#" class="nav-link">Saran dan Rekomendasi</a>
+              </li>
+              <li class="mb-2">
+                <a href="#" class="nav-link">Full Support dari Fishease Team</a>
+              </li>
+            </ul>
+          </div>
+          <div id="contact" class="w-full md:w-1/5 mb-6 md:mb-0">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">Contact Us</h2>
+            <ul class="text-gray-600">
+              <li class="mb-2">
+                <i class="fa-brands fa-whatsapp"></i>
+                <a href="#" class="nav-link"
+                  >WhatsApp: <br />
+                  +6287841185404</a
+                >
+              </li>
+              <li class="mb-2">
+                <i class="fa-solid fa-envelope"></i>
+                <a href="#" class="nav-link"
+                  >Email: <br />bintangawan0418@gmail.com</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="mt-8 border-t pt-4 text-center text-gray-600">
+          <p style="text-align: left">
+            &copy; 2024 Fishease Team | Bangkit Project
+          </p>
+        </div>
+      </div>
+    </footer>
+    <button id="scrollToTopBtn" class="scroll-to-top-btn">
+      <i class="fa-solid fa-arrow-up"></i>
+    </button>
+    <script src="js/main.js"></script>
+  </body>
+</html>

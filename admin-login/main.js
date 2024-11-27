@@ -22,9 +22,9 @@ openNavBtn.addEventListener("click", openNav);
 closeNavBtn.addEventListener("click", closeNav);
 
 function handleLogout() {
-  if (authService && typeof authService.logout === 'function') {
-      authService.logout();
+  if (authService && typeof authService.logout === "function") {
+    authService.logout();
   } else {
-      console.error('AuthService not found');
+    console.error("AuthService not found");
   }
 }

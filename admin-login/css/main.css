@@ -238,5 +238,75 @@ body {
 }
 
 /* ///////////////////////////////// 
-  Profile & History 
+  Forget Password
 */
+
+/* Forgot Password Container */
+.forgot-password-container {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  padding: 30px 20px;
+  width: 350px;
+  text-align: center;
+  margin: 100px auto; /* Center the form on the page */
+}
+
+/* Form Title */
+.forgot-password-form h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+/* Input Group */
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #eaeaea;
+  color: #333;
+  outline: none;
+}
+
+.input-group input::placeholder {
+  color: #888;
+}
+
+/* Reset Button */
+.reset-btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.reset-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Back to Login Link */
+.back-to-login-link {
+  display: block;
+  margin-top: 15px;
+  font-size: 14px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.back-to-login-link:hover {
+  text-decoration: underline;
+}
