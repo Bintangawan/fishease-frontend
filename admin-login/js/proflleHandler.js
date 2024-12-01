@@ -1,92 +1,163 @@
-// Wait for the DOM to be fully loaded before attaching event listeners and running scripts*
+// Wait for the DOM to be fully loaded before attaching event listeners and running scripts
 document.addEventListener('DOMContentLoaded', function() {
-    // Create dialog elements*
-    function createDialogs() {
-        // Confirmation Dialog*
-        const confirmDialog = document.createElement('dialog');
-        confirmDialog.id = 'confirm-delete-dialog';
-        confirmDialog.innerHTML = `
-            <h2>Confirm Deletion</h2>
-            <p>Are you sure you want to delete this entry?</p>
-            <form method="dialog">
-                <div class="dialog-actions">
-                    <button type="button" id="cancel-delete-btn">Cancel</button>
-                    <button type="button" id="confirm-delete-btn">Confirm</button>
+    function createDialogContainer() {
+        if (document.getElementById('custom-dialog-container')) return;
+
+        const dialogContainer = document.createElement('div');
+        dialogContainer.id = 'custom-dialog-container';
+        dialogContainer.innerHTML = `
+            <style>
+                #custom-dialog-container {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.5);
+                    display: none;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 1000;
+                }
+                .custom-dialog {
+                    background: white;
+                    padding: 20px;
+                    border-radius: 8px;
+                    text-align: center;
+                    max-width: 400px;
+                    width: 90%;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                }
+                .custom-dialog-buttons {
+                    display: flex;
+                    justify-content: center;
+                    gap: 10px;
+                    margin-top: 20px;
+                }
+                .custom-dialog-buttons button {
+                    padding: 10px 20px;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                }
+                .custom-dialog-confirm {
+                    background-color: #f44336;
+                    color: white;
+                }
+                .custom-dialog-cancel {
+                    background-color: #e0e0e0;
+                    color: black;
+                }
+            </style>
+            <div class="custom-dialog">
+                <h2 id="custom-dialog-title">Confirm Deletion</h2>
+                <p id="custom-dialog-message">Are you sure you want to delete this entry?</p>
+                <div class="custom-dialog-buttons">
+                    <button class="custom-dialog-cancel" id="custom-dialog-cancel">Cancel</button>
+                    <button class="custom-dialog-confirm" id="custom-dialog-confirm">Confirm</button>
                 </div>
-            </form>
+            </div>
         `;
-        document.body.appendChild(confirmDialog);
-
-        // Success Dialog*
-        const successDialog = document.createElement('dialog');
-        successDialog.id = 'success-dialog';
-        successDialog.innerHTML = `
-            <h2>Deletion Successful</h2>
-            <p id="success-message">The entry has been deleted.</p>
-            <form method="dialog">
-                <button>OK</button>
-            </form>
-        `;
-        document.body.appendChild(successDialog);
-
-        // Style the dialogs*
-        const style = document.createElement('style');
-        style.textContent = `
-            dialog {
-                border-radius: 8px;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                max-width: 400px;
-                width: 90%;
-            }
-            dialog::backdrop {
-                background-color: rgba(0,0,0,0.5);
-            }
-            .dialog-actions {
-                display: flex;
-                justify-content: space-between;
-                margin-top: 20px;
-            }
-            dialog button {
-                padding: 10px 20px;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-            }
-            #cancel-delete-btn {
-                background-color: #f0f0f0;
-                color: black;
-            }
-            #confirm-delete-btn {
-                background-color: #f44336;
-                color: white;
-            }
-        `;
-        document.head.appendChild(style);
+        document.body.appendChild(dialogContainer);
     }
+
+    // Show custom dialog
+    function showDialog(title, message, onConfirm) {
+        const dialogContainer = document.getElementById('custom-dialog-container');
+    const dialogTitle = document.getElementById('custom-dialog-title');
+    const dialogMessage = document.getElementById('custom-dialog-message');
+    const confirmButton = document.getElementById('custom-dialog-confirm');
+    const cancelButton = document.getElementById('custom-dialog-cancel');
+
+    dialogTitle.textContent = title;
+
+    // Clear previous content and add HTML or text
+    dialogMessage.innerHTML = typeof message === 'string' 
+        ? message 
+        : message.toString();
+
+    dialogContainer.style.display = 'flex';
+
+    // Remove previous listeners to prevent multiple bindings
+    confirmButton.onclick = null;
+    cancelButton.onclick = null;
+
+    // Add new listeners
+    confirmButton.onclick = () => {
+        dialogContainer.style.display = 'none';
+        onConfirm();
+    };
+
+    cancelButton.onclick = () => {
+        dialogContainer.style.display = 'none';
+    };
+
+    }
+
+    // Show success dialog
+    function showSuccessDialog(message) {
+        const dialogContainer = document.getElementById('custom-dialog-container');
+        const dialogTitle = document.getElementById('custom-dialog-title');
+        const dialogMessage = document.getElementById('custom-dialog-message');
+        const confirmButton = document.getElementById('custom-dialog-confirm');
+        const cancelButton = document.getElementById('custom-dialog-cancel');
+
+        dialogTitle.textContent = 'Success';
+        dialogMessage.textContent = message;
+        confirmButton.textContent = 'OK';
+        cancelButton.style.display = 'none';
+        dialogContainer.style.display = 'flex';
+
+        // Reset buttons after use
+        confirmButton.onclick = () => {
+            dialogContainer.style.display = 'none';
+            confirmButton.textContent = 'Confirm';
+            cancelButton.style.display = 'block';
+        };
+    }
+
     
-    // Get token from AuthService*
+    // Get token from AuthService
     const token = authService.getToken();
 
-    // Function to format date*
+    // Function to format date
     function formatDate(dateString) {
         const date = new Date(dateString);
-        return date.toLocaleDateString('en-GB'); // formats as DD/MM/YYYY*
+        return date.toLocaleDateString('en-GB'); // formats as DD/MM/YYYY
     }
 
-    // Function to update profile UI*
+    // Function to update profile UI
     function updateProfileUI(userData) {
         const userInfoElement = document.querySelector('.user-info');
         if (userInfoElement) {
             userInfoElement.innerHTML = `
                 <p><strong>Name:</strong> ${userData.name || 'N/A'}</p>
-                <p><strong>Email:</strong> ${userData.email || 'N/A'}</p>
+                <p><strong>Email:</strong> ${userData.email || 'N/A'}  <a href="#">Change Email</a></p>
                 <p><strong>Account Created:</strong> ${formatDate(userData.created_at) || 'N/A'}</p>
                 <p><strong>Phone Number:</strong> ${userData.phone || 'N/A'}</p>
             `;
         }
     }
 
-    // Function to create entry item HTML*
+    const originalUpdateProfileUI = window.updateProfileUI || function() {};
+    window.updateProfileUI = function(userData) {
+        // Call original implementation
+        originalUpdateProfileUI(userData);
+        
+        // Ensure the "Change Email" link exists after update
+        const userInfoElement = document.querySelector('.user-info');
+        if (userInfoElement) {
+            const emailChangeLink = userInfoElement.querySelector('a[href="#"]');
+            if (!emailChangeLink) {
+                const emailParagraph = userInfoElement.querySelector('p:nth-child(2)');
+                if (emailParagraph) {
+                    emailParagraph.innerHTML += ' <a href="#">Change Email</a>';
+                }
+            }
+        }
+    };
+
+    // Function to create entry item HTML
     function createEntryItemHTML(entry) {
         return `
         <div class="entry-item">
@@ -98,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <div class="entry-actions">
                 <a href="#" data-action="delete"><i class="fa-solid fa-trash"></i></a>
-                <a href="viewDetails.html?entryId=${entry.id_entry}">
+                <a href="viewDetails.html?entryId=${entry.id_entry}&diseaseName=${encodeURIComponent(entry.disease_name)}">
                     <i class="fa-solid fa-arrow-right"></i>
                 </a>
             </div>
@@ -106,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
     }
 
-    // Function to render scan history*
+    // Function to render scan history
     function renderScanHistory(scans) {
         const entryHistoryContainer = document.querySelector('.main-content');
         const titleElement = entryHistoryContainer.querySelector('.title');
@@ -116,18 +187,18 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Remove existing entry items*
+        // Remove existing entry items
         const existingEntryItems = entryHistoryContainer.querySelectorAll('.entry-item');
         existingEntryItems.forEach(item => item.remove());
 
-        // Render each scan entry*
+        // Render each scan entry
         scans.forEach(entry => {
             const entryHTML = createEntryItemHTML(entry);
             titleElement.insertAdjacentHTML('afterend', entryHTML);
         });
     }
 
-    // Function to update entry count*
+    // Function to update entry count
     function updateEntryCount(totalScans) {
         const entryCountElement = document.querySelector('.entry-stat h1');
         if (entryCountElement) {
@@ -135,7 +206,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Function to fetch user data*
+    // Function to fetch user data
     async function fetchUserData() {
         try {
             const response = await fetch('http://localhost:3000/userInfo', {
@@ -155,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Function to fetch scan history*
+    // Function to fetch scan history
     async function fetchScanHistory() {
         try {
             const response = await fetch('http://localhost:3000/scan-history', {
@@ -170,10 +241,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             const { total_scans, data } = await response.json();
             
-            // Update entry count*
+            // Update entry count
             updateEntryCount(total_scans);
 
-            // Render scan history*
+            // Render scan history
             renderScanHistory(data);
         } catch (error) {
             console.error('Error fetching scan history:', error);
@@ -181,11 +252,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Function to delete an entry*
+    // Function to delete an entry
     async function deleteEntry(event) {
         event.preventDefault();
         
-        // Find the closest entry item and its ID*
+        // Find the closest entry item and its ID
         const entryItem = event.target.closest('.entry-item');
         const entryInfoElement = entryItem.querySelector('.entry-info');
         
@@ -197,25 +268,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const entryId = entryInfoElement.getAttribute('data-entry-id');
         const entryDisease = entryInfoElement.querySelector('p:nth-child(2)').textContent.replace('Disease: ', '');
         
-        // Get dialog elements*
-        const confirmDialog = document.getElementById('confirm-delete-dialog');
-        const successDialog = document.getElementById('success-dialog');
-        const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
-        const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
-        
-        // Set dialog message*
-        confirmDialog.querySelector('p').textContent = 
-            `Are you sure you want to delete the entry for ${entryDisease}?`;
-        
-        // Show confirmation dialog*
-        confirmDialog.showModal();
-        
-        // Wait for user action*
-        const confirmPromise = new Promise((resolve, reject) => {
-            // Confirm button*
-            confirmDeleteBtn.onclick = async () => {
-                confirmDialog.close();
-                
+        // Show confirmation dialog
+        showDialog(
+            'Confirm Deletion', 
+            `Are you sure you want to delete the entry for ${entryDisease}?`,
+            async () => {
                 try {
                     const response = await fetch(`http://localhost:3000/scan-history/${entryId}`, {
                         method: 'DELETE',
@@ -229,58 +286,124 @@ document.addEventListener('DOMContentLoaded', function() {
                         throw new Error('Failed to delete entry');
                     }
 
-                    // Remove the entry item from the DOM*
+                    // Remove the entry item from the DOM
                     entryItem.remove();
 
-                    // Refresh scan history to update the count*
+                    // Refresh scan history to update the count
                     await fetchScanHistory();
 
-                    // Update success dialog message*
-                    successDialog.querySelector('#success-message').textContent = 
-                        `The entry for ${entryDisease} has been successfully deleted.`;
-
-                    // Show success dialog*
-                    successDialog.showModal();
+                    // Show success dialog
+                    showSuccessDialog(`The entry for ${entryDisease} has been successfully deleted.`);
 
                 } catch (error) {
                     console.error('Error deleting entry:', error);
-                    
-                    // Update success dialog message for error*
-                    successDialog.querySelector('#success-message').textContent = 
-                        'Failed to delete entry. Please try again.';
-                    successDialog.showModal();
+                    showSuccessDialog('Failed to delete entry. Please try again.');
                 }
-            };
-            
-            // Cancel button*
-            cancelDeleteBtn.onclick = () => {
-                confirmDialog.close();
-            };
-        });
-    }
-
-    createDialogs();
-
-   // Add event delegation for delete buttons*
-    const mainContent = document.querySelector('.main-content');
-    if (mainContent) {
-        mainContent.addEventListener('click', function(event) {
-            // Check if the clicked element is inside a delete button*
-            const deleteButton = event.target.closest('a[data-action="delete"]');
-            if (deleteButton) {
-                deleteEntry(event);
             }
-        });
+        );
     }
 
+    createDialogContainer();
+    
 
-    // Check if user is logged in before fetching data*
+    document.addEventListener('click', function(event) {
+        // Check if the clicked element is the "Change Email" link
+        const changeEmailLink = event.target.closest('.user-info a[href="#"]');
+        
+        if (changeEmailLink) {
+            event.preventDefault();
+            console.log('Change Email Link Clicked!');
+            
+            // Show dialog
+            showDialog('Change Email', `
+                <form id="change-email-form" style="text-align: left;">
+                    <label for="new-email" style="display: block; margin-bottom: 5px;">New Email</label>
+                    <input type="email" id="new-email" placeholder="Enter new email" required style="width: 100%; padding: 10px; margin-bottom: 15px;">
+                    
+                    <label for="current-password" style="display: block; margin-bottom: 5px;">Current Password</label>
+                    <input type="password" id="current-password" placeholder="Enter current password" required style="width: 100%; padding: 10px; margin-bottom: 15px;">
+                </form>
+            `, async () => {
+                const newEmail = document.getElementById('new-email').value;
+                const password = document.getElementById('current-password').value;
+
+                try {
+                    await updateEmail(newEmail, password);
+                } catch (error) {
+                    console.error('Email update error:', error);
+                }
+            });
+
+            // Modify confirm button text
+            const confirmButton = document.getElementById('custom-dialog-confirm');
+            confirmButton.textContent = 'Update Email';
+        }
+    }
+);
+
+
+    // Function to update email
+    async function updateEmail(newEmail, password) {
+        try {
+            const token = authService.getToken();
+
+            const response = await fetch('http://localhost:3000/update-mail', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    newEmail,
+                    password
+                })
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.message || 'Failed to update email');
+            }
+
+            if (result.data && result.data.token) {
+                authService.setToken(result.data.token);
+
+                const dialogContainer = document.getElementById('custom-dialog-container');
+                if (dialogContainer) {
+                    dialogContainer.style.display = 'none';
+                }
+
+                showSuccessDialog('Email updated successfully');
+                await fetchUserData();
+            }
+
+            return result;
+        } catch (error) {
+            console.error('Email update error:', error);
+            showDialog('Error', error.message || 'Failed to update email', () => {});
+            throw error;
+        }
+    }
+
+   // Add event delegation for delete buttons
+   const mainContent = document.querySelector('.main-content');
+   if (mainContent) {
+       mainContent.addEventListener('click', function(event) {
+           // Check if the clicked element is inside a delete button
+           const deleteButton = event.target.closest('a[data-action="delete"]');
+           if (deleteButton) {
+               deleteEntry(event);
+           }
+       });
+   }
+
+    // Check if user is logged in before fetching data
     if (authService.isLoggedIn()) {
-        // Fetch both user data and scan history when page loads*
+        // Fetch both user data and scan history when page loads
         fetchUserData();
         fetchScanHistory();
     } else {
-        // Redirect to login page if not logged in*
+        // Redirect to login page if not logged in
         window.location.href = '/login.html';
     }
 });

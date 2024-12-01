@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (response.ok) {
                 // Registration successful
                 alert('Registration successful!');
-                window.location.href = 'admin-login/login.html';
+                window.location.href = '/login.html';
             } else {
                 // Registration failed
                 alert(data.message || 'Registration failed. Please try again.');
