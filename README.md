@@ -1,5 +1,5 @@
-#Fishease Frontend
-###Integrated Features
+# Fishease Frontend
+### Integrated Features
 - User Login and Register
 - Forgot Password
 - Change Email
