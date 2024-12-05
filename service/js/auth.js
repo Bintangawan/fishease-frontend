@@ -151,7 +151,7 @@ if (loginForm) {
         
         try {
             await authService.login(email, password);
-            window.location.href = "http://localhost:5500/service/uploadImage.html";
+            window.location.href = "/service/uploadImage.html";
         } catch (error) {
             errorMessage.textContent = error.message;
             errorMessage.style.display = 'block';

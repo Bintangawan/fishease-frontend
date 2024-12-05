@@ -5,3 +5,4 @@
 - Change Email
 - Profile and Prediction History
 - Prediction Detail View
+- Upload to predict
