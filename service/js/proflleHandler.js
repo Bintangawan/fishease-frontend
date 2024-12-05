@@ -1,54 +1,33 @@
-// Wait for the DOM to be fully loaded before attaching event listeners and running scripts
+API_URL = 'http://localhost:3000'; // Change in prod
+
 document.addEventListener('DOMContentLoaded', function() {
+    function createLoadingOverlay() {
+        const overlay = document.createElement('div');
+        overlay.innerHTML = `
+        <link rel="stylesheet" href="css/loading.css" />
+         <div class="loading-overlay">
+          <div class="spinner">
+           <div class="spinner-inner"></div>
+          </div>
+          <p>Getting data...</p>
+         </div>
+        `;
+        document.body.appendChild(overlay);
+        return overlay;
+       }
+      
+    // Remove loading overlay
+    function removeLoadingOverlay(overlay) {
+        if (overlay) overlay.remove();
+    }
+
     function createDialogContainer() {
         if (document.getElementById('custom-dialog-container')) return;
 
         const dialogContainer = document.createElement('div');
         dialogContainer.id = 'custom-dialog-container';
         dialogContainer.innerHTML = `
-            <style>
-                #custom-dialog-container {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background: rgba(0, 0, 0, 0.5);
-                    display: none;
-                    justify-content: center;
-                    align-items: center;
-                    z-index: 1000;
-                }
-                .custom-dialog {
-                    background: white;
-                    padding: 20px;
-                    border-radius: 8px;
-                    text-align: center;
-                    max-width: 400px;
-                    width: 90%;
-                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                }
-                .custom-dialog-buttons {
-                    display: flex;
-                    justify-content: center;
-                    gap: 10px;
-                    margin-top: 20px;
-                }
-                .custom-dialog-buttons button {
-                    padding: 10px 20px;
-                    border: none;
-                    border-radius: 4px;
-                    cursor: pointer;
-                }
-                .custom-dialog-confirm {
-                    background-color: #f44336;
-                    color: white;
-                }
-                .custom-dialog-cancel {
-                    background-color: #e0e0e0;
-                    color: black;
-                }
-            </style>
+            <link rel="stylesheet" href="css/loading.css" />
             <div class="custom-dialog">
                 <h2 id="custom-dialog-title">Confirm Deletion</h2>
                 <p id="custom-dialog-message">Are you sure you want to delete this entry?</p>
@@ -64,33 +43,33 @@ document.addEventListener('DOMContentLoaded', function() {
     // Show custom dialog
     function showDialog(title, message, onConfirm) {
         const dialogContainer = document.getElementById('custom-dialog-container');
-    const dialogTitle = document.getElementById('custom-dialog-title');
-    const dialogMessage = document.getElementById('custom-dialog-message');
-    const confirmButton = document.getElementById('custom-dialog-confirm');
-    const cancelButton = document.getElementById('custom-dialog-cancel');
+        const dialogTitle = document.getElementById('custom-dialog-title');
+        const dialogMessage = document.getElementById('custom-dialog-message');
+        const confirmButton = document.getElementById('custom-dialog-confirm');
+        const cancelButton = document.getElementById('custom-dialog-cancel');
 
-    dialogTitle.textContent = title;
+        dialogTitle.textContent = title;
 
-    // Clear previous content and add HTML or text
-    dialogMessage.innerHTML = typeof message === 'string' 
-        ? message 
-        : message.toString();
+        // Clear previous content and add HTML or text
+        dialogMessage.innerHTML = typeof message === 'string' 
+            ? message 
+            : message.toString();
 
-    dialogContainer.style.display = 'flex';
+        dialogContainer.style.display = 'flex';
 
-    // Remove previous listeners to prevent multiple bindings
-    confirmButton.onclick = null;
-    cancelButton.onclick = null;
+        // Remove previous listeners to prevent multiple bindings
+        confirmButton.onclick = null;
+        cancelButton.onclick = null;
 
-    // Add new listeners
-    confirmButton.onclick = () => {
-        dialogContainer.style.display = 'none';
-        onConfirm();
-    };
+        // Add new listeners
+        confirmButton.onclick = () => {
+            dialogContainer.style.display = 'none';
+            onConfirm();
+        };
 
-    cancelButton.onclick = () => {
-        dialogContainer.style.display = 'none';
-    };
+        cancelButton.onclick = () => {
+            dialogContainer.style.display = 'none';
+        };
 
     }
 
@@ -115,7 +94,6 @@ document.addEventListener('DOMContentLoaded', function() {
             cancelButton.style.display = 'block';
         };
     }
-
     
     // Get token from AuthService
     const token = authService.getToken();
@@ -209,7 +187,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to fetch user data
     async function fetchUserData() {
         try {
-            const response = await fetch('http://localhost:3000/userInfo', {
+            loadingOverlay = createLoadingOverlay();
+            const response = await fetch(`${API_URL}/userInfo`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -229,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to fetch scan history
     async function fetchScanHistory() {
         try {
-            const response = await fetch('http://localhost:3000/scan-history', {
+            const response = await fetch(`${API_URL}/scan-history`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -249,6 +228,8 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (error) {
             console.error('Error fetching scan history:', error);
             updateEntryCount(0);
+        } finally {
+            removeLoadingOverlay(loadingOverlay);
         }
     }
 
@@ -274,7 +255,7 @@ document.addEventListener('DOMContentLoaded', function() {
             `Are you sure you want to delete the entry for ${entryDisease}?`,
             async () => {
                 try {
-                    const response = await fetch(`http://localhost:3000/scan-history/${entryId}`, {
+                    const response = await fetch(`${API_URL}/scan-history/${entryId}`, {
                         method: 'DELETE',
                         headers: {
                             'Authorization': `Bearer ${token}`,
@@ -304,7 +285,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     createDialogContainer();
-    
 
     document.addEventListener('click', function(event) {
         // Check if the clicked element is the "Change Email" link
@@ -341,13 +321,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 );
 
-
     // Function to update email
     async function updateEmail(newEmail, password) {
         try {
             const token = authService.getToken();
 
-            const response = await fetch('http://localhost:3000/update-mail', {
+            const response = await fetch(`${API_URL}/update-mail`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,

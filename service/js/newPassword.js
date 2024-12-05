@@ -1,6 +1,28 @@
+API_URL = 'http://localhost:3000'; // Change in prod
+
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('newPasswordForm');
     const errorMessageEl = document.getElementById('errorMessage');
+
+    function createLoadingOverlay() {
+        const overlay = document.createElement('div');
+        overlay.innerHTML = `
+        <link rel="stylesheet" href="css/loading.css" />
+         <div class="loading-overlay">
+          <div class="spinner">
+           <div class="spinner-inner"></div>
+          </div>
+          <p>Resetting your password...</p>
+         </div>
+        `;
+        document.body.appendChild(overlay);
+        return overlay;
+    }
+      
+    // Remove loading overlay
+    function removeLoadingOverlay(overlay) {
+        if (overlay) overlay.remove();
+    }
     
     // Function to get URL parameter
     const getUrlParameter = (name) => {
@@ -21,6 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
+
+        const loadingOverlay = createLoadingOverlay();
         
         // Reset error message
         errorMessageEl.textContent = '';
@@ -45,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            const response = await fetch('http://localhost:3000/resetPassword', { // Change in prode
+            const response = await fetch(`${API_URL}/resetPassword`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -62,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Success scenario
                 alert('Password reset successfully. Redirecting to login...');
                 // Redirect to login page
-                window.location.href = '/admin-login/login.html';
+                window.location.href = '/service/login.html';
             } else {
                 // Error scenario
                 errorMessageEl.textContent = result.message || 'Failed to reset password';
@@ -72,6 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Error:', error);
             errorMessageEl.textContent = 'Network error. Please try again.';
             errorMessageEl.style.display = 'block';
+        } finally {
+            removeLoadingOverlay(loadingOverlay);
         }
     });
 });

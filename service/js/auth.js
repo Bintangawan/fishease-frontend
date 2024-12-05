@@ -1,3 +1,26 @@
+API_URL = 'http://localhost:3000';
+
+// Loading Spinner Overlay
+function createLoadingOverlay(loading_message) {
+    const overlay = document.createElement('div');
+    overlay.innerHTML = `
+    <link rel="stylesheet" href="css/loading.css" />
+     <div class="loading-overlay">
+      <div class="spinner">
+       <div class="spinner-inner"></div>
+      </div>
+      <p>${loading_message}</p>
+     </div>
+    `;
+    document.body.appendChild(overlay);
+    return overlay;
+   }
+  
+// Remove loading overlay
+function removeLoadingOverlay(overlay) {
+    if (overlay) overlay.remove();
+}
+
 class AuthService {
     constructor() {
         this.tokenKey = 'fishease_token';
@@ -35,7 +58,7 @@ class AuthService {
     // Handle login
     async login(email, password) {
         try {
-            const response = await fetch(`http://localhost:3000/login`, {
+            const response = await fetch(`${API_URL}/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -57,10 +80,10 @@ class AuthService {
         }
     }
 
-    // New method for password reset request
+    // method for password reset request
     async requestPasswordReset(email) {
         try {
-            const response = await fetch(`http://localhost:3000/requestReset`, {
+            const response = await fetch(`${API_URL}/requestReset`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -80,9 +103,10 @@ class AuthService {
         }
     }
 
+    // method for password reset
     async resetPassword(token, newPassword) {
         try {
-            const response = await fetch(`http://localhost:5500/resetPassword`, {
+            const response = await fetch(`${API_URL}/resetPassword`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -108,7 +132,7 @@ class AuthService {
     // Handle logout
     logout() {
         this.removeToken();
-        window.location.href = '/admin-login/login.html';
+        window.location.href = '/service/login.html';
     }
 }
 
@@ -118,20 +142,23 @@ const authService = new AuthService();
 // Handle form submission
 const loginForm = document.getElementById('loginForm');
 if (loginForm) {
-  loginForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const errorMessage = document.getElementById('errorMessage');
-    
-    try {
-      await authService.login(email, password);
-      window.location.href = "http://localhost:5500/admin-login/uploadImage.html";
-    } catch (error) {
-      errorMessage.textContent = error.message;
-      errorMessage.style.display = 'block';
-    }
-  });
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();   
+        const loadingOverlay = createLoadingOverlay("Logging in..."); 
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const errorMessage = document.getElementById('errorMessage');
+        
+        try {
+            await authService.login(email, password);
+            window.location.href = "http://localhost:5500/service/uploadImage.html";
+        } catch (error) {
+            errorMessage.textContent = error.message;
+            errorMessage.style.display = 'block';
+        } finally {
+            removeLoadingOverlay(loadingOverlay);
+        }
+    });
 }
 
 // Handle forgot password form submission
@@ -139,6 +166,9 @@ const forgotPasswordForm = document.getElementById('forgotPasswordForm');
 if (forgotPasswordForm) {
     forgotPasswordForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+
+        const loadingOverlay = createLoadingOverlay("Sending password reset link...");
+
         const email = document.getElementById('email').value;
         const errorMessage = document.getElementById('errorMessage');
         const successMessage = document.getElementById('successMessage');
@@ -164,11 +194,13 @@ if (forgotPasswordForm) {
 
             // Optional: redirect after a few seconds
             setTimeout(() => {
-                window.location.href = '/admin-login/login.html';
+                window.location.href = '/service/login.html';
             }, 3000);
         } catch (error) {
             errorMessage.textContent = error.message;
             errorMessage.style.display = 'block';
+        } finally {
+            removeLoadingOverlay(loadingOverlay);
         }
     });
 }
@@ -179,6 +211,8 @@ const newPasswordForm = document.getElementById('newPasswordForm');
     if (newPasswordForm) {
         newPasswordForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            const loadingOverlay = createLoadingOverlay("Resetting password...");
             
             // Clear previous error messages
             errorMessage.textContent = '';
@@ -200,8 +234,8 @@ const newPasswordForm = document.getElementById('newPasswordForm');
 
             // Validate password complexity
             const passwordComplexityCheck = (password) => {
-                if (password.length < 6) {
-                    throw new Error('Password must be at least 6 characters long');
+                if (password.length < 8) {
+                    throw new Error('Password must be at least 8 characters long');
                 }
                 if (!/[A-Z]/.test(password)) {
                     throw new Error('Password must contain at least one uppercase letter');
@@ -236,6 +270,8 @@ const newPasswordForm = document.getElementById('newPasswordForm');
             } catch (error) {
                 errorMessage.textContent = error.message;
                 errorMessage.style.display = 'block';
+            } finally {
+                removeLoadingOverlay(loadingOverlay);
             }
         });
     }

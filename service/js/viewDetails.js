@@ -1,6 +1,28 @@
+API_URL = 'http://localhost:3000';
+
 document.addEventListener('DOMContentLoaded', function() {
     // Get token from AuthService
     const token = authService.getToken();
+
+    function createLoadingOverlay() {
+        const overlay = document.createElement('div');
+        overlay.innerHTML = `
+        <link rel="stylesheet" href="css/loading.css" />
+         <div class="loading-overlay">
+          <div class="spinner">
+           <div class="spinner-inner"></div>
+          </div>
+          <p>Getting your data in...</p>
+         </div>
+        `;
+        document.body.appendChild(overlay);
+        return overlay;
+       }
+      
+    // Remove loading overlay
+    function removeLoadingOverlay(overlay) {
+        if (overlay) overlay.remove();
+    }
 
     // Function to format date
     function formatDate(dateString) {
@@ -11,7 +33,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to fetch entry details
     async function fetchEntryDetails(entryId) {
         try {
-            const response = await fetch(`http://localhost:3000/scan-history/${entryId}`, {
+            loadingOverlay = createLoadingOverlay();
+            const response = await fetch(`${API_URL}/scan-history/${entryId}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -34,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to fetch disease information
     async function fetchDiseaseInfo(diseaseName) {
         try {
-            const response = await fetch('http://localhost:3000/disease-info', {
+            const response = await fetch(`${API_URL}/disease-info`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -52,6 +75,8 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (error) {
             console.error('Error fetching disease information:', error);
             return null;
+        } finally {
+            removeLoadingOverlay(loadingOverlay);
         }
     }
 
@@ -66,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Update confidence box
         document.querySelector('.confidence-box div h1').textContent = 
-            `${(entryDetails.confidence_score * 100).toFixed(0)}%`;
+            `${entryDetails.confidence_score}%`;
 
         // Update image
         const imageElement = document.querySelector('.image-section img');

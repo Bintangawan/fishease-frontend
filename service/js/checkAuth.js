@@ -2,7 +2,7 @@
 class AuthChecker {
     constructor() {
         this.authService = new AuthService();
-        this.loginPath = 'http://localhost:5500/admin-login/login.html';
+        this.loginPath = '/service/login.html';
     }
 
     checkAuthentication() {
