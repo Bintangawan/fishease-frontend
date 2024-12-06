@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Update confidence box
         document.querySelector('.confidence-box div h1').textContent = 
-            `${entryDetails.confidence_score}%`;
+            `${parseFloat(entryDetails.confidence_score.toFixed(1))}%`;
 
         // Update image
         const imageElement = document.querySelector('.image-section img');

@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const dialogContainer = document.createElement('div');
         dialogContainer.id = 'custom-dialog-container';
         dialogContainer.innerHTML = `
-            <link rel="stylesheet" href="css/loading.css" />
+            <link rel="stylesheet" href="css/dialog.css" />
             <div class="custom-dialog">
                 <h2 id="custom-dialog-title">Confirm Deletion</h2>
                 <p id="custom-dialog-message">Are you sure you want to delete this entry?</p>
@@ -142,9 +142,9 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="entry-info" data-entry-id="${entry.id_entry}">
                 <p><strong>Entry ID:</strong> #${entry.id_entry}</p>
                 <p><strong>Disease:</strong> ${entry.disease_name}</p>
-                <p><strong>Confidence:</strong> ${(entry.confidence_score * 100).toFixed(0)}%</p>
+                <p><strong>Confidence:</strong> ${parseFloat(entry.confidence_score.toFixed(0))}%</p>
                 <p><strong>Date:</strong> ${formatDate(entry.created_at)}</p>
-            </div>
+            </div>  
             <div class="entry-actions">
                 <a href="#" data-action="delete"><i class="fa-solid fa-trash"></i></a>
                 <a href="viewDetails.html?entryId=${entry.id_entry}&diseaseName=${encodeURIComponent(entry.disease_name)}">

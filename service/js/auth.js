@@ -191,16 +191,12 @@ if (forgotPasswordForm) {
             } else {
                 alert('Password reset link sent to your email');
             }
-
-            // Optional: redirect after a few seconds
-            setTimeout(() => {
-                window.location.href = '/service/login.html';
-            }, 3000);
         } catch (error) {
             errorMessage.textContent = error.message;
             errorMessage.style.display = 'block';
         } finally {
             removeLoadingOverlay(loadingOverlay);
+            window.location.href = '/service/login.html';
         }
     });
 }
@@ -265,7 +261,7 @@ const newPasswordForm = document.getElementById('newPasswordForm');
 
                 // Show success message and redirect
                 alert('Password reset successful. Redirecting to login...');
-                window.location.href = '/admin-login/login.html';
+                window.location.href = '/service/login.html';
 
             } catch (error) {
                 errorMessage.textContent = error.message;
