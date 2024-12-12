@@ -87,12 +87,22 @@ document.addEventListener('DOMContentLoaded', function() {
         cancelButton.style.display = 'none';
         dialogContainer.style.display = 'flex';
 
-        // Reset buttons after use
-        confirmButton.onclick = () => {
-            dialogContainer.style.display = 'none';
-            confirmButton.textContent = 'Confirm';
-            cancelButton.style.display = 'block';
-        };
+        return new Promise((resolve) => {
+            const handleConfirm = () => {
+              dialogContainer.style.display = 'none';
+              confirmButton.textContent = 'Confirm';
+              cancelButton.style.display = 'block';
+              
+              // Remove the event listener to prevent memory leaks
+              confirmButton.removeEventListener('click', handleConfirm);
+              
+              // Resolve the promise
+              resolve();
+            };
+        
+            // Add event listener
+            confirmButton.addEventListener('click', handleConfirm);
+          });
     }
     
     // Get token from AuthService
@@ -115,6 +125,34 @@ document.addEventListener('DOMContentLoaded', function() {
                 <p><strong>Phone Number:</strong> ${userData.phone || 'N/A'}</p>
             `;
         }
+    }
+
+    // Email validation function
+    function validateEmail(email) {
+        // Comprehensive email validation regex
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        
+        // Check if email matches the regex pattern
+        if (!emailRegex.test(email)) {
+            return false;
+        }
+
+        // Additional checks
+        // Ensure email is not too long
+        if (email.length > 254) {
+            return false;
+        }
+
+        // Prevent some common invalid email patterns
+        const invalidPatterns = [
+            /\.{2,}/, // Multiple consecutive dots
+            /^\./, // Starts with a dot
+            /\.$/, // Ends with a dot
+            /@\./, // Dot immediately after @
+            /\.@/ // Dot before @
+        ];
+
+        return !invalidPatterns.some(pattern => pattern.test(email));
     }
 
     const originalUpdateProfileUI = window.updateProfileUI || function() {};
@@ -292,7 +330,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (changeEmailLink) {
             event.preventDefault();
-            console.log('Change Email Link Clicked!');
             
             // Show dialog
             showDialog('Change Email', `
@@ -306,6 +343,12 @@ document.addEventListener('DOMContentLoaded', function() {
             `, async () => {
                 const newEmail = document.getElementById('new-email').value;
                 const password = document.getElementById('current-password').value;
+
+                if (!validateEmail(newEmail)) {
+                    alert('Please enter a valid email address');
+                    loadingOverlay.remove();
+                    return;
+                }
 
                 try {
                     await updateEmail(newEmail, password);
@@ -324,6 +367,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to update email
     async function updateEmail(newEmail, password) {
         try {
+            loadingOverlay = createLoadingOverlay();
             const token = authService.getToken();
 
             const response = await fetch(`${API_URL}/update-mail`, {
@@ -341,6 +385,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const result = await response.json();
 
             if (!response.ok) {
+                removeLoadingOverlay(loadingOverlay);
                 throw new Error(result.message || 'Failed to update email');
             }
 
@@ -351,9 +396,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (dialogContainer) {
                     dialogContainer.style.display = 'none';
                 }
-
-                showSuccessDialog('Email updated successfully');
-                await fetchUserData();
+                
+                removeLoadingOverlay(loadingOverlay);
+                await showSuccessDialog('Email updated successfully');
+                location.reload(true);
             }
 
             return result;
@@ -361,7 +407,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Email update error:', error);
             showDialog('Error', error.message || 'Failed to update email', () => {});
             throw error;
-        }
+        } 
     }
 
    // Add event delegation for delete buttons

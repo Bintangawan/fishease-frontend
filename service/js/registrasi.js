@@ -23,6 +23,34 @@ document.addEventListener('DOMContentLoaded', function() {
         if (overlay) overlay.remove();
     }
     
+    // Email validation function
+    function validateEmail(email) {
+        // Comprehensive email validation regex
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        
+        // Check if email matches the regex pattern
+        if (!emailRegex.test(email)) {
+            return false;
+        }
+
+        // Additional checks
+        // Ensure email is not too long
+        if (email.length > 254) {
+            return false;
+        }
+
+        // Prevent some common invalid email patterns
+        const invalidPatterns = [
+            /\.{2,}/, // Multiple consecutive dots
+            /^\./, // Starts with a dot
+            /\.$/, // Ends with a dot
+            /@\./, // Dot immediately after @
+            /\.@/ // Dot before @
+        ];
+
+        return !invalidPatterns.some(pattern => pattern.test(email));
+    }
+
     // Phone number validation
     const phoneInput = document.getElementById('phone');
     phoneInput.addEventListener('input', function(e) {
@@ -51,6 +79,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const confirmPassword = document.getElementById('confirm-password').value;
         
         // Validation
+        if (!validateEmail(email)) {
+            alert('Please enter a valid email address');
+            loadingOverlay.remove();
+            return;
+        }
+
         if (password !== confirmPassword) {
             alert('Passwords do not match!');
             return;
