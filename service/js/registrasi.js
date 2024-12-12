@@ -81,17 +81,19 @@ document.addEventListener('DOMContentLoaded', function() {
         // Validation
         if (!validateEmail(email)) {
             alert('Please enter a valid email address');
-            loadingOverlay.remove();
+            removeLoadingOverlay(loadingOverlay);
             return;
         }
 
         if (password !== confirmPassword) {
             alert('Passwords do not match!');
+            removeLoadingOverlay(loadingOverlay);
             return;
         }
         
         if (phone.length < 6) {
             alert('Phone number must be at least 6 digits!');
+            removeLoadingOverlay(loadingOverlay);
             return;
         }
         
