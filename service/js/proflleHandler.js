@@ -316,7 +316,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 } catch (error) {
                     console.error('Error deleting entry:', error);
-                    showSuccessDialog('Failed to delete entry. Please try again.');
+                    const checkEntryExists = await fetch(`${API_URL}/scan-history/${entryId}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (checkEntryExists.ok) {
+                        await showSuccessDialog('Failed to delete entry. Please try again.');
+                    }
                 }
             }
         );
@@ -346,7 +356,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 if (!validateEmail(newEmail)) {
                     alert('Please enter a valid email address');
-                    loadingOverlay.remove();
+                    removeLoadingOverlay(loadingOverlay);
                     return;
                 }
 
